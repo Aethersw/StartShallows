@@ -92,9 +92,9 @@ end
 
 if game.Workspace:FindFirstChild("Dungeon") and not game.Workspace:FindFirstChild("Live") then
     if game.ReplicatedStorage.World.Dungeondata.Location.Value ~= "Temp" then
-    loadstring(game:HttpGet("TBA"))();
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/Aethersw/StartShallows/main/AUTOFARM1"))();
     elseif game.ReplicatedStorage.World.Dungeondata.Location.Value == "Temp" and Settings.TempFarm == true then
-        loadstring(game:HttpGet("TBA"))();
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/Aethersw/StartShallows/main/TEMPLEFARM1"))();
     end
     return
 end
