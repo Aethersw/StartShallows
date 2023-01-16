@@ -128,7 +128,7 @@ syn.queue_on_teleport([[
     repeat task.wait() until not Player.PlayerGui:FindFirstChild("Intro");
 
     task.wait(1);
-    loadstring(game:HttpGet("TBA"))();
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/Aethersw/StartShallows/main/Start1"))();
 ]])
 
 if Run.Runsummary.Visible == true then
