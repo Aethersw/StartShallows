@@ -1,0 +1,143 @@
+--//Teleport
+local Player = game.Players.LocalPlayer;
+local Run = Player.PlayerGui.Run;
+
+repeat task.wait() until game:IsLoaded();
+repeat task.wait() until not Player.PlayerGui:FindFirstChild("Intro");
+if not game.Workspace:FindFirstChild("Dungeon") then
+repeat task.wait() until Run.Runsummary.Main.Close.Visible == true
+task.wait(10);
+end
+
+--//Tables
+local Settings = {};
+
+--//Services
+local HttpService = game:GetService("HttpService");
+
+--//Functions
+function loadSettings()
+    if isfile("NK_Settings.json") then
+    Settings = HttpService:JSONDecode(readfile("NK_Settings.json"));
+    end
+end
+
+function saveSettings()
+    local savedTable = HttpService:JSONEncode(Settings);
+
+    writefile("NK_Settings.json", savedTable);
+    Settings = HttpService:JSONDecode(readfile("NK_Settings.json"));
+end
+
+function Press(Path)
+    for i,v in pairs(getconnections(Path)) do
+        v:Function();
+    end
+end
+
+--///Setup
+loadSettings();
+
+if Settings.Region == nil then
+    error("No Region Specified");
+end
+
+if Settings.Difficulty == nil then
+    error("No Difficulty Specified");
+end
+
+if Settings.Special == nil then
+    error("Please specify Special");
+end
+
+if Settings.NextRegion == nil or Settings.AutoSell == nil then
+    local Function = Instance.new("BindableFunction")
+Function.OnInvoke = CallBack
+
+game:GetService("StarterGui"):SetCore("SendNotification", {
+Title = "VALUE ERROR",
+Text = "NEXTREGION OR AUTOSELL NOT SPECIFIED.",
+Icon = "",
+Duration = 10,
+Callback = Function;
+})
+end
+
+if Settings.LeaveAtRegion == nil then
+    local Function = Instance.new("BindableFunction")
+Function.OnInvoke = CallBack
+
+game:GetService("StarterGui"):SetCore("SendNotification", {
+Title = "VALUE ERROR",
+Text = "LEAVEATREGION NOT SPECIFIED, GOING TILL DREAMS.",
+Icon = "",
+Duration = 10,
+Callback = Function;
+})
+end
+
+if Settings.RarityFilter == nil or type(Settings.RarityFilter) ~= "string" then
+    local Function = Instance.new("BindableFunction")
+Function.OnInvoke = CallBack
+
+game:GetService("StarterGui"):SetCore("SendNotification", {
+Title = "DATATYPE ERROR",
+Text = "NO RARITYFILTER SET OR NOT STRING.",
+Icon = "",
+Duration = 10,
+Callback = Function;
+})
+return
+end
+
+if game.Workspace:FindFirstChild("Dungeon") and not game.Workspace:FindFirstChild("Live") then
+    if game.ReplicatedStorage.World.Dungeondata.Location.Value ~= "Temp" then
+    loadstring(game:HttpGet("TBA"))();
+    elseif game.ReplicatedStorage.World.Dungeondata.Location.Value == "Temp" and Settings.TempFarm == true then
+        loadstring(game:HttpGet("TBA"))();
+    end
+    return
+end
+
+
+local MT = getrawmetatable(game);
+setreadonly(MT, false);
+
+local Old = MT.__namecall;
+
+MT.__namecall = newcclosure(function(self, ...)
+    local Method = getnamecallmethod();
+    local Args = {...};
+
+    if Method == "FireServer" and self.Name == "Regiontrig" and Args[1] == "Lobby" then
+        Args[2]["Region"] = Settings.Region;
+        Args[2]["Difflevel"] = Settings.Difficulty;
+        Args[2]["Payment"] = "None";
+        Args[2]["Special"] = Settings.Special;
+    end
+
+    return Old(self, unpack(Args))
+end)
+
+--//Load Script
+syn.queue_on_teleport([[
+    repeat task.wait() until game:IsLoaded();
+
+    local Player = game.Players.LocalPlayer;
+
+    repeat task.wait() until not Player.PlayerGui:FindFirstChild("Intro");
+
+    task.wait(1);
+    loadstring(game:HttpGet("TBA"))();
+]])
+
+if Run.Runsummary.Visible == true then
+Press(Run.Runsummary.Main.Close.Button.MouseButton1Click);
+task.wait(3);
+end
+
+Press(Player.PlayerGui.Game.Relax.Equip.Subframe.Run.Button.MouseButton1Click);
+task.wait(1.47);
+Press(Run.Runsetup.Setup.Choices.Quickstart.Button.MouseButton1Click);
+task.wait(4);
+game.ReplicatedStorage.Ints.Regiontrig:FireServer("Start", Run.Setup.Lobby.Value);
