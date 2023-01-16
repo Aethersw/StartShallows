@@ -44,4 +44,4 @@ end
 saveSettings();
  
 -- Load the code from the specified URL
-loadstring(game:HttpGet("TBA"))();
+loadstring(game:HttpGet("https://raw.githubusercontent.com/Aethersw/StartShallows/main/TP1"))();
