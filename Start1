@@ -26,7 +26,7 @@ local Settings = {
     Special = false, -- Crucible
     NextRegion = true,
     AutoSell = true,
-    TempFarm = false, -- Pillar Farm and SYNC farm
+    TempFarm = true, -- Pillar Farm and SYNC farm
     RarityFilter = "Alpha" -- Examples: "Legendary" Ignores Legendary and above, "Alpha" Ignores Alpha and above. Filters: Legendary, Alpha, Omega, Core
 }
  
