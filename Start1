@@ -20,7 +20,7 @@ Execute in lobby and wait 10 seconds
 ]]
  
 local Settings = {
-    Region = "Shallows",
+    Region = "Midnight",
     LeaveAtRegion = nil, -- Replace with nil if wanna complete all regions until Junction
     Difficulty = 400,
     Special = true, -- Crucible
