@@ -20,10 +20,10 @@ Execute in lobby and wait 10 seconds
 ]]
  
 local Settings = {
-    Region = "Vertigo",
-    LeaveAtRegion = "Vertigo", -- Replace with nil if wanna complete all regions until Junction
+    Region = "Outerwall",
+    LeaveAtRegion = "Outerwall", -- Replace with nil if wanna complete all regions until Junction
     Difficulty = 400,
-    Special = true, -- Crucible
+    Special = false, -- Crucible
     NextRegion = true,
     AutoSell = true,
     TempFarm = true, -- Pillar Farm and SYNC farm
